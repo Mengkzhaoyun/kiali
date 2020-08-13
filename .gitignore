@@ -48,3 +48,5 @@ operator
 
 # Do not commit helm-charts code to this repo
 helm-charts
+
+console/
