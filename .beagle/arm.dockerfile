@@ -4,6 +4,8 @@ WORKDIR /go/src/github.com/kiali/kiali
 
 Add . ./
 
+ARG VERSION=v1.22.1
+
 ENV GOPROXY=https://goproxy.cn,direct  
 
 RUN go build -o /go/bin/kiali -ldflags "-X main.version=${VERSION}"
