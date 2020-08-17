@@ -6,7 +6,8 @@ Add . ./
 
 ARG VERSION=v1.22.1
 
-ENV GOPROXY=https://goproxy.cn,direct  
+ENV GOPROXY=https://goproxy.cn,direct \
+KIALI_CONTAINER_VERSION=$VERSION
 
 RUN go build -o /go/bin/kiali -ldflags "-X main.version=${VERSION}"
 
