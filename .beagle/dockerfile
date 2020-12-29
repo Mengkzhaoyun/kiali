@@ -1,0 +1,21 @@
+ARG BASE
+
+FROM ${BASE}
+
+ARG AUTHOR
+ARG VERSION
+
+LABEL maintainer=${AUTHOR} version=${VERSION}
+
+ARG TARGETOS
+ARG TARGETARCH
+
+ENV KIALI_HOME=/opt/kiali \
+    PATH=$KIALI_HOME:$PATH
+
+WORKDIR $KIALI_HOME
+
+COPY ./dist/kiali-$TARGETOS-$TARGETARCH /opt/kiali/kiali
+COPY ./console $KIALI_HOME/console/
+
+ENTRYPOINT ["/opt/kiali/kiali"]

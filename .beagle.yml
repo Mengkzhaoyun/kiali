@@ -1,0 +1,101 @@
+platform: 10.11.92.33
+
+workspace:
+  base: /go
+  path: src/github.com/kiali/kiali
+
+clone:
+  git:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-git:1.0
+    dns: 223.5.5.5
+
+pipeline:
+
+  jaeger-ui:
+    image: registry.cn-qingdao.aliyuncs.com/wod/jaeger-ui:v1.12.0
+    commands:
+      - rm -rf jaeger-ui
+      - mkdir -p jaeger-ui/packages/jaeger-ui/build
+      - cp -r /opt/jaeger/www/* jaeger-ui/packages/jaeger-ui/build/
+
+  build:
+    image: registry.cn-qingdao.aliyuncs.com/wod/golang:1.15.6-alpine
+    dns: 223.5.5.5
+    volumes:
+      - /data/cache/golang/pkg/:/go/pkg/ 
+    environment:
+      - GOPROXY=https://goproxy.cn
+    commands:
+      - mkdir -p dist
+      - bash .beagle/build.sh
+
+  docker:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    dns: 223.5.5.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.12
+    dockerfile: .beagle/dockerfile
+    repo: wod/kiali
+    version: v1.28.1
+    args: "TARGETOS=linux,TARGETARCH=amd64"
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets:
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+
+  docker-arm64:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    dns: 223.5.5.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.12-arm64
+    dockerfile: .beagle/dockerfile
+    repo: wod/kiali
+    version: v1.28.1
+    channel: arm64
+    args: "TARGETOS=linux,TARGETARCH=amd64"
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets: 
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+        
+  docker-ppc64le:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    dns: 223.5.5.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.12-ppc64le
+    dockerfile: .beagle/dockerfile
+    repo: wod/kiali
+    version: v1.28.1
+    channel: ppc64le
+    args: "TARGETOS=linux,TARGETARCH=amd64"
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets: 
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
+
+  docker-mips64le:
+    image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
+    dns: 223.5.5.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    base: registry.cn-qingdao.aliyuncs.com/wod/alpine:3.11-mips64le
+    dockerfile: .beagle/dockerfile
+    repo: wod/kiali
+    version: v1.28.1
+    channel: mips64le
+    args: "TARGETOS=linux,TARGETARCH=amd64"
+    registry: registry.cn-qingdao.aliyuncs.com
+    secrets: 
+      - source: REGISTRY_USER_ALIYUN
+        target: REGISTRY_USER
+      - source: REGISTRY_PASSWORD_ALIYUN
+        target: REGISTRY_PASSWORD
