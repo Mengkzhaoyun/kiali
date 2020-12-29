@@ -17,15 +17,13 @@ git push beagle github
 ## build
 
 ```bash
-go get -u github.com/mjibson/esc
-
-rm -rf jaeger-ui
+rm -rf console
 docker run --rm \
--v $PWD/:/go/src/github.com/jaegertracing/jaeger \
--w /go/src/github.com/jaegertracing/jaeger \
-registry.cn-qingdao.aliyuncs.com/wod/jaeger-ui:v1.12.0 \
-sh -c "mkdir -p jaeger-ui/packages/jaeger-ui/build && cp -r /opt/jaeger/www/* jaeger-ui/packages/jaeger-ui/build/"
+-v $PWD/:/go/src/github.com/kiali/kiali \
+-w /go/src/github.com/kiali/kiali \
+registry.cn-qingdao.aliyuncs.com/wod/kiali-ui:v1.28.0 \
+sh -c "mkdir -p console && cp -r /www/* console/"
 
 export GOARCH=arm64
-make build-all-in-one
+make build
 ```

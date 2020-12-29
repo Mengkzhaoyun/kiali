@@ -2,7 +2,7 @@ platform: 10.11.92.33
 
 workspace:
   base: /go
-  path: src/github.com/kiali/kiali
+  path: src/github.com/kiali/kiali-ui
 
 clone:
   git:
@@ -12,11 +12,11 @@ clone:
 pipeline:
 
   jaeger-ui:
-    image: registry.cn-qingdao.aliyuncs.com/wod/jaeger-ui:v1.12.0
+    image: registry.cn-qingdao.aliyuncs.com/wod/kiali-ui:v1.28.0
     commands:
-      - rm -rf jaeger-ui
-      - mkdir -p jaeger-ui/packages/jaeger-ui/build
-      - cp -r /opt/jaeger/www/* jaeger-ui/packages/jaeger-ui/build/
+      - rm -rf console
+      - mkdir -p console
+      - cp -r /www/* console/
 
   build:
     image: registry.cn-qingdao.aliyuncs.com/wod/golang:1.15.6-alpine
