@@ -2,7 +2,7 @@ platform: 10.11.92.33
 
 workspace:
   base: /go
-  path: src/github.com/kiali/kiali-ui
+  path: src/github.com/kiali/kiali
 
 clone:
   git:
