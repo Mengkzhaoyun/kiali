@@ -56,7 +56,7 @@ pipeline:
     repo: wod/kiali
     version: v1.28.1
     channel: arm64
-    args: "TARGETOS=linux,TARGETARCH=amd64"
+    args: "TARGETOS=linux,TARGETARCH=arm64"
     registry: registry.cn-qingdao.aliyuncs.com
     secrets: 
       - source: REGISTRY_USER_ALIYUN
@@ -74,7 +74,7 @@ pipeline:
     repo: wod/kiali
     version: v1.28.1
     channel: ppc64le
-    args: "TARGETOS=linux,TARGETARCH=amd64"
+    args: "TARGETOS=linux,TARGETARCH=ppc64le"
     registry: registry.cn-qingdao.aliyuncs.com
     secrets: 
       - source: REGISTRY_USER_ALIYUN
@@ -92,7 +92,7 @@ pipeline:
     repo: wod/kiali
     version: v1.28.1
     channel: mips64le
-    args: "TARGETOS=linux,TARGETARCH=amd64"
+    args: "TARGETOS=linux,TARGETARCH=mips64le"
     registry: registry.cn-qingdao.aliyuncs.com
     secrets: 
       - source: REGISTRY_USER_ALIYUN
