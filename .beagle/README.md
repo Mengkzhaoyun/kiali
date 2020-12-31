@@ -6,12 +6,6 @@ git remote add upstream git@github.com:kiali/kiali.git
 git fetch upstream
 
 git merge v1.28.1
-
-git remote add beagle git@cloud.wodcloud.com:cloud/kiali.git
-
-git fetch beagle
-
-git push beagle github
 ```
 
 ## build
